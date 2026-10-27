@@ -1,69 +1,77 @@
-import Image from "next/image";
+import Image from 'next/image';
+import Link from 'next/link';
+import { Hero } from '@/components/home/Hero';
+import { BestSellers, CategoryCards, FamilyExplorer, ScentQuiz } from '@/components/home/Sections';
+import { Icon, StarRow } from '@/components/Icons';
+import { Reveal } from '@/components/Reveal';
+import { BRANDS, TESTIMONIALS, getProduct } from '@/lib/products';
 
 export default function Home() {
+  const br = getProduct('baccarat-rouge-540')!;
+  const av = getProduct('creed-aventus')!;
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <>
+      <Hero />
+
+      <div className="brands" aria-label="Marcas">
+        <div className="brands__track">
+          {[...BRANDS, ...BRANDS].map((b, i) => <span key={i} className="brands__item"><span>{b}</span><i /></span>)}
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </div>
+
+      <section className="section wrap">
+        <Reveal className="section-head">
+          <h2>Colecciones</h2>
+          <Link href="/tienda" className="link-arrow">Ver toda la tienda <Icon.arrow /></Link>
+        </Reveal>
+        <CategoryCards />
+      </section>
+
+      <BestSellers />
+      <FamilyExplorer />
+
+      <section className="section--tight wrap">
+        <div className="editorial">
+          <Reveal media className="editorial__media">
+            <div><Image src={br.img} alt="Maison Francis Kurkdjian Baccarat Rouge 540" width={375} height={500} /></div>
+            <div><Image src={av.img} alt="Creed Aventus" width={375} height={500} /></div>
+          </Reveal>
+          <Reveal className="editorial__copy">
+            <span className="eyebrow">Garantía Royale</span>
+            <h2>Originales, sellados y con factura</h2>
+            <p>Trabajamos únicamente con distribuidores autorizados. Cada frasco llega sellado de fábrica, con su número de lote verificable y factura con comprobante fiscal.</p>
+            <p>¿No estás seguro? Pide una muestra de cortesía con tu pedido y descubre cómo evoluciona la fragancia en tu piel antes de abrir el frasco.</p>
+            <Link href="/tienda?f=ambar" className="btn">Descubrir el nicho <Icon.arrow /></Link>
+          </Reveal>
         </div>
-      </main>
-    </div>
+      </section>
+
+      <ScentQuiz />
+
+      <Reveal as="section" className="wrap">
+        <div className="perks">
+          <div className="perk"><span className="perk__icon"><Icon.truck /></span><div><h4>Envío en 24–48 h</h4><p>Gratis desde RD$ 5,000 a todo el país.</p></div></div>
+          <div className="perk"><span className="perk__icon"><Icon.shield /></span><div><h4>100% originales</h4><p>Distribuidores autorizados y lote verificable.</p></div></div>
+          <div className="perk"><span className="perk__icon"><Icon.gift /></span><div><h4>Muestra de cortesía</h4><p>Y empaque de regalo sin costo.</p></div></div>
+          <div className="perk"><span className="perk__icon"><Icon.lock /></span><div><h4>Pago seguro</h4><p>Stripe, PayPal, transferencia o contra entrega.</p></div></div>
+        </div>
+      </Reveal>
+
+      <section className="section wrap">
+        <Reveal className="section-head">
+          <h2>Opiniones de clientes</h2>
+          <span className="rating-pill"><Icon.star /> 4.8 de 5 · más de 2,500 pedidos</span>
+        </Reveal>
+        <Reveal className="testis">
+          {TESTIMONIALS.map((r) => (
+            <figure className="testi" key={r.name}>
+              <StarRow n={r.rating} />
+              <blockquote>“{r.text}”</blockquote>
+              <figcaption><span className="avatar">{r.name[0]}</span><div><strong style={{ fontWeight: 500 }}>{r.name}</strong><span>{r.city}</span></div></figcaption>
+            </figure>
+          ))}
+        </Reveal>
+      </section>
+    </>
   );
 }
